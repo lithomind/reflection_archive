@@ -21,8 +21,7 @@ export function renderHeader(): string {
       </div>
       <div class="header-container">
         <div class="logo" role="button" tabindex="0">
-          <div class="logo-main">Reflection</div>
-          <div class="logo-sub">ARCHIVE</div>
+          <img src="logo.png" alt="Reflection ARCHIVE" class="logo-image">
         </div>
         <div class="header-right">
            <!-- Ad removed -->
