@@ -32,7 +32,13 @@ class NewsApp {
   private async init(): Promise<void> {
     try {
       this.articles = await fetchArticles();
-      this.render();
+      
+      // Set up hash-based routing
+      window.addEventListener('hashchange', () => this.handleRoute());
+      
+      // Handle initial route
+      this.handleRoute();
+      
       this.startClock();
       this.loadEarthquakeInfo();
       this.initWeatherAuto();
@@ -40,6 +46,43 @@ class NewsApp {
       console.error('Failed to load articles:', error);
       this.appElement.innerHTML = '<p>記事の読み込みに失敗しました。ページを再読み込みしてください。</p>';
     }
+  }
+
+  private handleRoute(): void {
+    const hash = location.hash || '#/';
+    const path = hash.slice(1); // Remove the '#'
+    
+    if (path.startsWith('/article/')) {
+      const articleId = path.replace('/article/', '');
+      const article = this.articles.find(a => a.id === articleId);
+      if (article) {
+        this.currentView = 'article';
+        this.currentCategory = article.id;
+      } else {
+        this.currentView = 'home';
+        this.currentCategory = null;
+      }
+    } else if (path.startsWith('/category/')) {
+      const category = decodeURIComponent(path.replace('/category/', ''));
+      this.currentView = 'category';
+      this.currentCategory = category;
+    } else if (path.startsWith('/quake/')) {
+      const quakeIndex = parseInt(path.replace('/quake/', ''), 10);
+      if (this.cachedQuakes && this.cachedQuakes[quakeIndex]) {
+        this.currentView = 'quake';
+        this.currentQuake = this.cachedQuakes[quakeIndex];
+      } else {
+        this.currentView = 'home';
+        this.currentQuake = null;
+      }
+    } else {
+      this.currentView = 'home';
+      this.currentCategory = null;
+      this.currentQuake = null;
+    }
+    
+    this.render();
+    window.scrollTo(0, 0);
   }
 
   private startClock(): void {
@@ -268,39 +311,26 @@ class NewsApp {
   }
 
   private handleCategoryClick(category: string): void {
-    this.currentView = 'category';
-    this.currentCategory = category;
-    this.renderMainContent();
-    window.scrollTo(0, 0);
+    location.hash = '#/category/' + encodeURIComponent(category);
   }
 
   private handleHomeClick(): void {
-    this.currentView = 'home';
-    this.currentCategory = null;
-    this.renderMainContent();
-    window.scrollTo(0, 0);
+    location.hash = '#/';
   }
 
   private handleArticleClick(article: Article): void {
-    this.currentView = 'article';
-    this.currentCategory = article.id;
-    this.renderMainContent();
-    window.scrollTo(0, 0);
+    location.hash = '#/article/' + article.id;
   }
 
   private handleBackClick(): void {
-    this.currentView = 'home';
-    this.currentCategory = null;
-    this.currentQuake = null;
-    this.renderMainContent();
-    window.scrollTo(0, 0);
+    history.back();
   }
 
   private handleQuakeClick(quake: any): void {
-    this.currentView = 'quake';
-    this.currentQuake = quake;
-    this.renderMainContent();
-    window.scrollTo(0, 0);
+    const index = this.cachedQuakes?.indexOf(quake) ?? -1;
+    if (index >= 0) {
+      location.hash = '#/quake/' + index;
+    }
   }
 
 }
