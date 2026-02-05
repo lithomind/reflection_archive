@@ -7,19 +7,6 @@ export function renderSidebar(recentArticles: Article[], _popularArticles: Artic
     </li>
   `).join('');
 
-  const topics = [
-    { title: '言語学：失われる言葉の宇宙', tag: '人文学' },
-    { title: '量子力学と意識の接点', tag: '自然科学' },
-    { title: 'ポスト資本主義の展望', tag: '社会科学' },
-    { title: 'デジタル時代の美学', tag: '芸術・文化' }
-  ];
-
-  const topicsHtml = topics.map(topic => `
-    <li class="sidebar-topic-item">
-      <span class="sidebar-topic-tag">${topic.tag}</span>
-      <span class="sidebar-topic-title">${topic.title}</span>
-    </li>
-  `).join('');
 
   return `
     <aside class="sidebar">
