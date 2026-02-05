@@ -1,7 +1,7 @@
 import type { Article } from './types';
 
 export async function fetchArticles(): Promise<Article[]> {
-  const indexResponse = await fetch('/articles/index.json');
+  const indexResponse = await fetch('articles/index.json');
   if (!indexResponse.ok) {
     throw new Error('Failed to fetch article index');
   }
@@ -9,7 +9,7 @@ export async function fetchArticles(): Promise<Article[]> {
   const articleFiles: string[] = await indexResponse.json();
   
   const articlePromises = articleFiles.map(async (filename) => {
-    const res = await fetch(`/articles/${filename}`);
+    const res = await fetch(`articles/${filename}`);
     if (!res.ok) {
       console.warn(`Failed to fetch article: ${filename}`);
       return null;
