@@ -11,35 +11,25 @@ export function renderSidebar(recentArticles: Article[], _popularArticles: Artic
   return `
     <aside class="sidebar">
       <section class="sidebar-section">
-        <h3 class="sidebar-title">ARCHIVE INSIGHT</h3>
-        <div class="widget-insight" style="font-size: 11px; line-height: 1.5;">
-          <strong>今日の一言：</strong><br>
-          「真理は深き淵にあり」<br>
-          <span style="color: #666;">（デモクリトス）</span>
+        <h3 class="sidebar-title">気象情報</h3>
+        <div id="weather-permission-container" class="sidebar-widget">
+          <p>現地の予報を表示するには位置情報が必要です。</p>
+          <button id="btn-request-location" class="sidebar-button">位置情報を許可</button>
         </div>
-      </section>
-
-      <section class="sidebar-section">
-        <h3 class="sidebar-title">気象・位置情報</h3>
-        <div id="weather-permission-container" style="font-size: 11px; line-height: 1.4;">
-          <p>現地の正確な予報を表示するため、位置情報を取得します。<br>
-          <span style="color: #666;">※静的なサイトであり、データは天気予報の取得にのみ使用されます。</span></p>
-          <button id="btn-request-location" style="margin-top: 8px; width: 100%; padding: 4px; font-size: 11px; cursor: pointer;">位置情報を許可する</button>
-        </div>
-        <div id="sidebar-weather-info" style="display: none; font-size: 12px;">
+        <div id="sidebar-weather-info" class="sidebar-widget" style="display: none;">
           <!-- Content injected via JS -->
         </div>
       </section>
 
       <section class="sidebar-section">
-        <h3 class="sidebar-title">地震情報 (P2PQuake)</h3>
-        <div id="earthquake-info" style="font-size: 11px; line-height: 1.4;">
-          更新中...
+        <h3 class="sidebar-title">地震情報</h3>
+        <div id="earthquake-info" class="sidebar-widget">
+          読み込み中...
         </div>
       </section>
 
       <section class="sidebar-section">
-        <h3 class="sidebar-title">最近の記事 <span>一覧</span></h3>
+        <h3 class="sidebar-title">最近の記事</h3>
         <ul class="sidebar-article-list">
           ${recentHtml}
         </ul>
