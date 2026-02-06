@@ -581,6 +581,8 @@ img {
   margin-bottom: 24px;
 }
 
+.article-detail-body h2,
+.article-detail-body h3,
 .article-detail-section-title {
   font-size: 20px;
   font-weight: bold;

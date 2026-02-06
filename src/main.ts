@@ -233,6 +233,9 @@ class NewsApp {
     // Render main content
     this.renderMainContent();
     this.appElement.appendChild(this.mainElement);
+    
+    // Trigger updates after elements are attached to DOM
+    this.triggerDynamicUpdates();
   }
 
   private renderMainContent(): void {
@@ -294,8 +297,6 @@ class NewsApp {
 
     this.mainElement.appendChild(contentArea);
 
-    // Trigger updates after elements are attached
-    this.triggerDynamicUpdates();
   }
 
   private triggerDynamicUpdates(): void {

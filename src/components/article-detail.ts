@@ -1,13 +1,8 @@
+import { marked } from 'marked';
 import type { Article } from '../types';
 
 export function renderArticleDetail(article: Article, _onBackClick: () => void): string {
-  const paragraphs = article.content.split('\n\n');
-  const contentHtml = paragraphs.map(p => {
-    if (p.startsWith('### ')) {
-      return `<h3 class="article-detail-section-title">${p.replace('### ', '')}</h3>`;
-    }
-    return `<p>${p}</p>`;
-  }).join('\n');
+  const contentHtml = marked.parse(article.content);
 
   return `
     <article class="article-detail">
@@ -32,14 +27,6 @@ export function renderArticleDetail(article: Article, _onBackClick: () => void):
       <div class="article-detail-body">
         ${contentHtml}
       </div>
-      <footer class="article-detail-footer">
-        <div class="article-detail-keywords">
-          <span class="keywords-label">関連キーワード:</span>
-          <span class="keyword-tag">#${article.category}</span>
-          <span class="keyword-tag">#ReflectionArchive</span>
-          <span class="keyword-tag">#知の探究</span>
-        </div>
-      </footer>
     </article>
   `;
 }
